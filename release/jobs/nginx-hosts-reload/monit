@@ -1,0 +1,5 @@
+check process nginx-hosts-reload
+  with pidfile /var/vcap/sys/run/nginx-hosts-reload/nginx-hosts-reload.pid
+  start program "/var/vcap/jobs/nginx-hosts-reload/bin/nginx-hosts-reload-ctl start"
+  stop program "/var/vcap/jobs/nginx-hosts-reload/bin/nginx-hosts-reload-ctl stop"
+  group vcap
