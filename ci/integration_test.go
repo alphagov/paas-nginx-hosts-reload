@@ -29,7 +29,7 @@ var _ = Describe("NginxHostsReloadIntegration", func() {
 		ctx = context.Background()
 
 		dockerSockPath := filepath.Join(os.Getenv("HOME"), ".docker/run/docker.sock")
-		if _, err := os.Stat(dockerSockPath); err == nil {
+		if _, err = os.Stat(dockerSockPath); err == nil {
 
 			cli, err = client.NewClient("unix://"+dockerSockPath, "", nil, nil)
 		} else {
@@ -79,6 +79,8 @@ var _ = Describe("NginxHostsReloadIntegration", func() {
 		Expect(err).NotTo(HaveOccurred())
 		Expect(rc).To(Equal(0))
 
+		time.Sleep(1 * time.Second)
+
 		webResp, err := http.Get("http://localhost:8081")
 		Expect(err).NotTo(HaveOccurred())
 		Expect(webResp.StatusCode).To(Equal(200))
@@ -113,10 +115,11 @@ func RunDockerCommand(cli *client.Client, ctx context.Context, containerID strin
 	}
 
 	resp, err := cli.ContainerExecAttach(ctx, exec.ID, types.ExecStartCheck{})
-	defer resp.Close()
 	if err != nil {
+		resp.Close()
 		return "", 0, err
 	}
+	defer resp.Close()
 
 	// Read the output
 	buf := new(bytes.Buffer)
