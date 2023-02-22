@@ -1,0 +1,10 @@
+---
+name: nginx-hosts-reload
+
+packages:
+  - nginx-hosts-reload
+
+templates:
+  bin/nginx-hosts-reload-ctl.erb: bin/nginx-hosts-reload-ctl
+
+properties: {}

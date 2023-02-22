@@ -1,0 +1,10 @@
+/.vscode
+/.idea
+/bin
+/release/src/github.com/alphagov/paas-nginx-hosts-reload
+/tmp
+
+bosh-release-tarballs/
+release/.dev_builds/
+release/blobs/
+release/dev_releases/
